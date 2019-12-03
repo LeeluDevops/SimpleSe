@@ -1,19 +1,9 @@
 {
-  "name": "FooPage",
-  "defaultLocale": "en_US",
+  "name": "FooPage",  
   "elements": [
     {
       "name": "bar",
-      "locale": [
-        {
-          "name": "en_US",
-          "locator": "xpath=//h1"
-        },
-        {
-          "name": "en_FR",
-          "locator": "xpath=//h1"
-        }
-      ],
+      "locator": "xpath=//h1",
       "wait": {
         "until": "visible",
         "for": 45

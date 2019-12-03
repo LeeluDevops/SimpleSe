@@ -4,12 +4,7 @@
   "elements": [
     {
       "name": "heading",
-      "locale": [
-        {
-          "name": "en_US",
-          "locator": "css=h1[class=heading]"
-        }
-      ],
+      "locator": "css=h1[class=heading]",
       "wait": {
         "until": "visible",
         "for": 10
@@ -17,12 +12,7 @@
     },
     {
       "name": "checkboxesLink",
-      "locale": [
-        {
-          "name": "en_US",
-          "locator": "xpath=//a[text()='Checkboxes']"
-        }
-      ],
+      "locator": "xpath=//a[text()='Checkboxes']",
       "wait": {
         "until": "clickable",
         "for": 10
@@ -30,12 +20,8 @@
     },
     {
       "name": "sampleTxtField",
-      "locale": [
-        {
-          "name": "en_US",
-          "locator": "xpath=//a[text()='textField']"
-        }
-      ]
+       "locator": "xpath=//a[text()='textField']"
+
     }
   ]
 }

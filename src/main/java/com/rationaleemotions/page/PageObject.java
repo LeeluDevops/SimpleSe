@@ -1,11 +1,10 @@
 package com.rationaleemotions.page;
 
-import com.google.common.base.Preconditions;
-import com.rationaleemotions.internal.locators.Until;
-import com.rationaleemotions.pojos.JsonWebElement;
-import com.rationaleemotions.pojos.WebPage;
-import com.google.common.collect.Lists;
-import com.rationaleemotions.utils.StringUtils;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
@@ -14,10 +13,10 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
+import com.google.common.collect.Lists;
+import com.rationaleemotions.internal.locators.Until;
+import com.rationaleemotions.pojos.JsonWebElement;
+import com.rationaleemotions.pojos.WebPage;
 
 /**
  * This class represents the entry point to all page object building.
@@ -28,8 +27,7 @@ public final class PageObject {
     private SearchContext context;
     private String jsonFileSource;
     private WebPage page;
-    private String locale;
-
+   
     /**
      * Helps create a new instance.
      *
@@ -41,16 +39,7 @@ public final class PageObject {
         this.jsonFileSource = jsonFileSource;
     }
 
-    /**
-     * @param locale - The locale for which the page object is being created.
-     * @return - The current {@link PageObject} instance.
-     */
-    public PageObject forLocale(String locale) {
-        this.locale = locale;
-        return this;
-    }
-
-    /**
+       /**
      * @param fieldName - The name of the field as defined in the JSON file.
      * @return - A {@link Button} instance.
      */
@@ -218,13 +207,6 @@ public final class PageObject {
         return getElements(fieldName, TextField.class);
     }
 
-    private String getLocale() {
-        if (StringUtils.isBlank(locale)) {
-            locale = page.getDefaultLocale();
-        }
-        return locale;
-    }
-
     private final <E> E getElement(String fieldName, Class<E> clazz) {
         WebElement webElement = newRawElement(getJsonWebElement(fieldName)).getWebElement();
         return (E) newInstance(clazz, webElement);
@@ -268,7 +250,7 @@ public final class PageObject {
     private RawElement newRawElement(JsonWebElement element) {
         DecoratedSearchContext context = new DecoratedSearchContext(this.context, element.getUntil(), element
             .getWaitForSeconds());
-        return new RawElement(context, element, getLocale());
+        return new RawElement(context, element);
     }
 
     private static Object newInstance(Class<?> clazz, WebElement webElement) {

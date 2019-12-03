@@ -15,7 +15,6 @@ import java.util.Map;
 
 public class WebPage {
     private String name;
-    private String defaultLocale;
     private Map<String, JsonWebElement> elements = Maps.newConcurrentMap();
 
     public static WebPage getPage(String fileName) {
@@ -30,11 +29,10 @@ public class WebPage {
             JsonObject contents = parser.parse(new FileReader(fileName)).getAsJsonObject();
             page = new WebPage();
             page.name = contents.get("name").getAsString();
-            page.defaultLocale = contents.get("defaultLocale").getAsString();
             JsonArray elements = contents.get("elements").getAsJsonArray();
             for (int i = 0; i < elements.size(); i++) {
                 JsonObject object = elements.get(i).getAsJsonObject();
-                JsonWebElement element = JsonWebElement.newElement(object, page.defaultLocale);
+                JsonWebElement element = JsonWebElement.newElement(object);
                 page.elements.put(element.getName(), element);
             }
             PageStore.addPage(page);
@@ -48,11 +46,7 @@ public class WebPage {
         return name;
     }
 
-    public String getDefaultLocale() {
-        return defaultLocale;
-    }
-
-    public JsonWebElement getWebElement(String name) {
+   public JsonWebElement getWebElement(String name) {
         return elements.get(name);
     }
 

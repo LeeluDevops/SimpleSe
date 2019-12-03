@@ -29,7 +29,7 @@ public class PageObjectTest {
     @Test
     public void testPageWithDifferentLocale() {
         WebDriver driver = new FakeDriver();
-        PageObject homePage = new PageObject(driver, "src/test/resources/HomePage.json").forLocale("en_FR");
+        PageObject homePage = new PageObject(driver, "src/test/resources/HomePage.json");
         Label heading = homePage.getLabel("heading");
         Assert.assertEquals(heading.getText(), "Fake text");
         Link checkbox = homePage.getLink("checkboxesLink");
