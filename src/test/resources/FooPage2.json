@@ -1,0 +1,14 @@
+{
+	"name": "FooPage",
+	"defaultLocale": "en_US",
+	"elements": [
+		{
+			"name": "bar",
+			"locator": "xpath=//h1",
+			"wait": {
+				"until": "visible",
+				"for": 45
+			}
+		}
+	]
+}

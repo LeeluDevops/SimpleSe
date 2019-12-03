@@ -94,5 +94,83 @@ public class PageObjectTest {
         textField.type(Keys.chord(Keys.CONTROL, "a"));
         Assert.assertEquals(textField.getText(), expected);
     }
+    
+    
+	/* without locale */
+    @Test
+    public void testCheckboxCount_withoutLocale() {
+        WebDriver driver = new FakeDriver();
+        PageObject checkboxPage = new PageObject(driver, "src/test/resources/CheckboxPage2.json");
+        List<Checkbox> checkboxList = checkboxPage.getCheckboxes("checkbox");
+        Assert.assertEquals(checkboxList.size(), 1);
+        int checkedCount = 0;
+        for (Checkbox checkbox : checkboxList) {
+            if (checkbox.isChecked()) {
+                checkedCount += 1;
+            }
+        }
+        Assert.assertEquals(checkedCount, 1);
+    }
+    
+    @Test(expectedExceptions = IllegalArgumentException.class,
+            expectedExceptionsMessageRegExp = "Unable to locate element.*")
+    public void testInvalidElement_withoutLocale() {
+        WebDriver driver = new FakeDriver();
+        PageObject homePage = new PageObject(driver, "src/test/resources/HomePage2.json");
+        homePage.getLabel("iDontExist");
+    }
 
+    
+    @Test(expectedExceptions = IllegalArgumentException.class,
+            expectedExceptionsMessageRegExp = "A field name cannot be null \\Q(\\Eor\\Q)\\E empty")
+    public void testInvalidElementWithNullValues_withoutLocale() {
+        WebDriver driver = new FakeDriver();
+        PageObject homePage = new PageObject(driver, "src/test/resources/HomePage2.json");
+        homePage.getLabel("");
+    }
+
+    
+    @Test
+    public void testFindElementWithWaits_withoutLocale() {
+        WebDriver driver = new FakeDriver(2, Until.Visible);
+        PageObject homePage = new PageObject(driver, "src/test/resources/HomePage2.json");
+        Label heading = homePage.getLabel("heading");
+        Assert.assertEquals(heading.getText(), "Fake text");
+    }
+    
+    @Test(expectedExceptions = TimeoutException.class,
+            expectedExceptionsMessageRegExp = "Expected condition failed: waiting for visibility of element located .*")
+    public void testFindElementsWithWaitsTimingOutVisibilityCondition_withoutLocale() {
+        WebDriver driver = new FakeDriver(5, Until.Visible, true);
+        PageObject homePage = new PageObject(driver, "src/test/resources/HomePage2.json");
+        homePage.getLabel("heading");
+    }
+    
+    @Test(expectedExceptions = TimeoutException.class,
+            expectedExceptionsMessageRegExp = "Expected condition failed: waiting for element to be clickable.*")
+    public void testFindElementsWithWaitsTimingoutClickableCondition_withoutLocale() {
+        WebDriver driver = new FakeDriver(5, Until.Clickable, true);
+        PageObject homePage = new PageObject(driver, "src/test/resources/HomePage2.json");
+        homePage.getLink("checkboxesLink");
+    }
+
+    @Test
+    public void testKeyPressMethodsForTextField_withoutLocale() {
+        WebDriver driver = new FakeDriver(5, Until.Clickable);
+        PageObject homePage = new PageObject(driver, "src/test/resources/HomePage2.json");
+        TextField textField = homePage.getTextField("sampleTxtField");
+        textField.type(Keys.DIVIDE);
+        Assert.assertEquals(textField.getText(), Keys.DIVIDE.toString());
+    }
+
+    @Test
+    public void testKeysChordMethodsForTextField_withoutLocale() {
+        WebDriver driver = new FakeDriver(1, Until.Clickable);
+        PageObject homePage = new PageObject(driver, "src/test/resources/HomePage2.json");
+        TextField textField = homePage.getTextField("sampleTxtField");
+        String expected = Keys.chord(Keys.CONTROL, "a");
+        textField.type(Keys.chord(Keys.CONTROL, "a"));
+        Assert.assertEquals(textField.getText(), expected);
+    }
+    
 }

@@ -1,0 +1,26 @@
+{
+	"name": "HomePage",
+	"defaultLocale": "en_US",
+	"elements": [
+		{
+			"name": "heading",
+			"locator": "css=h1[class=heading]",
+			"wait": {
+				"until": "visible",
+				"for": 10
+			}
+		},
+		{
+			"name": "checkboxesLink",
+			"locator": "xpath=//a[text()='Checkboxes']",
+			"wait": {
+				"until": "clickable",
+				"for": 10
+			}
+		},
+		{
+			"name": "sampleTxtField",
+			"locator": "xpath=//a[text()='textField']"
+		}
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"name": "CheckboxPage",
+	"elements": [
+		{
+			"name": "checkbox",
+			"locator": "xpath=//input[@type='checkbox']",
+			"wait": {
+				"until": "visible",
+				"for": 45
+			}
+		}
+	]
+}
